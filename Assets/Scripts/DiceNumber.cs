@@ -35,19 +35,20 @@ public class DiceNumber : MonoBehaviour
 
 			for (int i = 0; i < rayTarget.Length; i++)
 			{
-				Debug.DrawRay(rayTarget[i].transform.position, rayTarget[i].transform.up * 0.075f);
-				if (Physics.Raycast(rayTarget[i].transform.position, rayTarget[i].transform.up, 0.075f, layerMask))
+				Debug.DrawRay(rayTarget[i].transform.position, rayTarget[i].transform.up * 0.08f);
+				if (Physics.Raycast(rayTarget[i].transform.position, rayTarget[i].transform.up, 0.08f, layerMask))
 				{
 					if (rB.velocity.magnitude <= 0.1f)
 					{
 						if (Number == 0)
 						{
 							Number = int.Parse(rayTarget[i].name);
+							rB.IsSleeping();
 							checkedNumber = true;
 						}
 					}
 				}
-				else if (rB.velocity.magnitude <= 0.1f)
+				else if (rB.velocity.magnitude <= 0.05f)
 				{					
 					time += Time.deltaTime;
 					if(time >= 1.5f)

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class InstantiateDice : MonoBehaviour
@@ -16,6 +17,7 @@ public class InstantiateDice : MonoBehaviour
 	[SerializeField] TMP_InputField countOfd10;
 	[SerializeField] TMP_InputField countOfd12;
 	[SerializeField] TMP_InputField countOfd20;
+	[SerializeField] Toggle toggle;
 	public GameObject[] d4;
 	public GameObject[] d6;
 	public GameObject[] d8;
@@ -23,16 +25,20 @@ public class InstantiateDice : MonoBehaviour
 	public GameObject[] d12;
 	public GameObject[] d20;
 	List<GameObject[]> dice = new List<GameObject[]>();
-	int parseSumm;
+	int parseSumm;	
+	   	
 
 	void Update()
 	{
-		CheckIfMaxDice(countOfd4);
-		CheckIfMaxDice(countOfd6);
-		CheckIfMaxDice(countOfd8);
-		CheckIfMaxDice(countOfd10);
-		CheckIfMaxDice(countOfd12);
-		CheckIfMaxDice(countOfd20);
+		if (toggle.isOn)
+		{
+			CheckIfMaxDice(countOfd4);
+			CheckIfMaxDice(countOfd6);
+			CheckIfMaxDice(countOfd8);
+			CheckIfMaxDice(countOfd10);
+			CheckIfMaxDice(countOfd12);
+			CheckIfMaxDice(countOfd20); 
+		}
 	}
 
 	void CheckIfMaxDice(TMP_InputField input)
@@ -53,7 +59,7 @@ public class InstantiateDice : MonoBehaviour
 		d12 = new GameObject[Parse(countOfd12)];
 		d20 = new GameObject[Parse(countOfd20)];
 
-		if (parseSumm > 100)
+		if (parseSumm > 100 && toggle.isOn)
 		{
 			print("Too much dice!");
 			parseSumm = 0;
@@ -107,6 +113,10 @@ public class InstantiateDice : MonoBehaviour
 		{
 			dice[i] = Instantiate(prefab);
 			dice[i].name = name;
+			Material mat = dice[i].GetComponent<Renderer>().material;
+			mat.color = Random.ColorHSV();
+			mat.EnableKeyword("_EmissionColor");
+			mat.SetColor("_EmissionColor", Random.ColorHSV());
 		}
 	}
 
