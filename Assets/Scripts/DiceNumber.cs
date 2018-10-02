@@ -10,11 +10,11 @@ public class DiceNumber : MonoBehaviour
 	int force = 1;
 	float time;
 	bool checkedNumber;
-	Rigidbody rB;	
+	Rigidbody rB;
 
 
 	void Start()
-	{		
+	{
 		rB = GetComponent<Rigidbody>();
 		diceSides = transform.childCount;
 		rayTarget = new GameObject[diceSides];
@@ -43,23 +43,22 @@ public class DiceNumber : MonoBehaviour
 						if (Number == 0)
 						{
 							Number = int.Parse(rayTarget[i].name);
-							rB.IsSleeping();
 							checkedNumber = true;
 						}
 					}
 				}
 				else if (rB.velocity.magnitude <= 0.05f)
-				{					
+				{
 					time += Time.deltaTime;
-					if(time >= 1.5f)
+					if (time >= 1.5f)
 					{
 						Vector3 vec = new Vector3(Random.Range(-force, force), Random.Range(-force, force), Random.Range(-force, force));
 						rB.AddForce(vec, ForceMode.Impulse);
 						force++;
 						time = 0;
-					}					
+					}
 				}
-			} 
-		}
-	}	
+			}
+		}		
+	}
 }

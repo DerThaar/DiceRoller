@@ -5,6 +5,7 @@ using TMPro;
 
 public class InstantiateDice : MonoBehaviour
 {
+	[SerializeField] GameObject diceSpawn;
 	[SerializeField] GameObject d4Prefab;
 	[SerializeField] GameObject d6Prefab;
 	[SerializeField] GameObject d8Prefab;
@@ -25,8 +26,13 @@ public class InstantiateDice : MonoBehaviour
 	public GameObject[] d12;
 	public GameObject[] d20;
 	List<GameObject[]> dice = new List<GameObject[]>();
-	int parseSumm;	
-	   	
+	int parseSumm;
+	Vector3 startPos;
+
+	private void Start()
+	{
+		startPos = diceSpawn.transform.position;
+	}
 
 	void Update()
 	{
@@ -111,7 +117,8 @@ public class InstantiateDice : MonoBehaviour
 	{
 		for (int i = 0; i < dice.Length; i++)
 		{
-			dice[i] = Instantiate(prefab);
+			Quaternion rotation = new Quaternion(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180));
+			dice[i] = Instantiate(prefab, startPos, rotation);
 			dice[i].name = name;
 			Material mat = dice[i].GetComponent<Renderer>().material;
 			mat.color = Random.ColorHSV();
